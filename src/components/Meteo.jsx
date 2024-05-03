@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {  Card } from "react-bootstrap"
 import { useParams } from "react-router-dom";
 
@@ -9,6 +9,8 @@ const Meteo = () => {
 
 const params =useParams()
 const name = params.cityname
+const [lat, setLat] = useState("")
+const [weather,setWeather] = useState({})
 
 
 const myFetch = () => {
@@ -26,8 +28,41 @@ const myFetch = () => {
         console.log(città)
     const lat = città[0].lat
     console.log(lat)
-    const longit = città.lon
+    const longit = città[0].lon
     console.log(longit)
+    setLat(`lat=${lat}&lon=${longit}`)
+
+
+        
+
+       
+  
+
+   
+
+     
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
+  };
+  const mySecondFetch = () => {
+   
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?${lat}&appid=${apiKey}`)
+    .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Errore ");
+        }
+      })
+      .then((data) => {
+        console.log(data)
+        setWeather(data)
+        console.log(weather)
+
 
 
         
@@ -46,17 +81,31 @@ const myFetch = () => {
   };
   
 
+  
+
   useEffect(() => {
     myFetch();
     
    }, []);
+   useEffect(() => {
+    if(lat) {
+
+   
+    mySecondFetch();
+    }
+    
+   }, [lat]);
+
+
     return(
+
         <> 
+   {weather &&
         <Card >
         <Card.Img variant="top" src="" />
         <Card.Body>
-          <Card.Title>Card Title
-
+          <Card.Title>
+{weather.cod}
           </Card.Title>
           <Card.Title>Card Title</Card.Title>
           <Card.Title>Card Title</Card.Title>
@@ -64,7 +113,9 @@ const myFetch = () => {
           
         </Card.Body>
       </Card>
+   }
       </>
+    
     )
 }
 export default Meteo
