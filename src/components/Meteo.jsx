@@ -104,8 +104,9 @@ const myFetch = () => {
         <> 
    {weather &&
         <Card key = {weather.id}>
-        <Card.Img variant="top" src="" />
+       
         <Card.Body>
+          <Card.Img className="iconStyle" variant= "top" src= {`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />  
           <Card.Title>
 {weather.name}
           </Card.Title>
