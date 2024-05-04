@@ -8,9 +8,11 @@ const Meteo = () => {
 // const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&APPID=${apiKey}`;
 
 const params =useParams()
+console.log(params)
 const name = params.cityname
+console.log(params.cityname)
 const [lat, setLat] = useState("")
-const [weather,setWeather] = useState({})
+const [weather,setWeather] = useState(null)
 
 
 const myFetch = () => {
@@ -101,14 +103,20 @@ const myFetch = () => {
 
         <> 
    {weather &&
-        <Card >
+        <Card key = {weather.id}>
         <Card.Img variant="top" src="" />
         <Card.Body>
           <Card.Title>
-{weather.cod}
+{weather.name}
           </Card.Title>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title>{weather.sys.country}</Card.Title>
+          <Card.Title>{`Temperatura: ${(weather.main.temp / 10).toFixed(1)}`}</Card.Title>
+          
+          <Card.Title>{`Latitudine:  ${weather.coord.lat}`}</Card.Title>
+          <Card.Title>{ `Longitudine:  ${weather.coord.lon}`}</Card.Title>
+          <Card.Title>{`Velocità del vento:  ${weather.wind.speed}`}</Card.Title>
+         
+          <Card.Title>{weather.weather[0].description}</Card.Title>
         
           
         </Card.Body>

@@ -15,7 +15,7 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div className="App" backgr>
       <header className="App-header">
       <MyHeading/>
         <BrowserRouter> 
